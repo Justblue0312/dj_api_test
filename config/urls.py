@@ -8,7 +8,7 @@ from drf_yasg import openapi
 schema_view = get_schema_view(
     openapi.Info(
         title="Django Rest API Testing",
-        default_version='v1',
+        default_version="v1",
         description="Test description",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="trao0312@gmail.com"),
@@ -20,10 +20,17 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("products.urls")),
-    path('api-token-auth/', views.obtain_auth_token),
-    path('api-listing/', schema_view.with_ui('swagger',
-         cache_timeout=0), name='schema-swagger-ui'),
-    path('api-documentation/', schema_view.with_ui('redoc',
-         cache_timeout=0), name='schema-redoc'),
+    path("", include("apps.products.urls")),
+    path("", include("apps.users.urls")),
+    path("api-token-auth/", views.obtain_auth_token),
+    path(
+        "api-listing/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    path(
+        "api-documentation/",
+        schema_view.with_ui("redoc", cache_timeout=0),
+        name="schema-redoc",
+    ),
 ]

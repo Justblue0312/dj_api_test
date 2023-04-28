@@ -17,23 +17,27 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
-INSTALLED_APPS = [
+CONFIG_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    "products",
-
-    "rest_framework",
-
-    'rest_framework.authtoken',
-
-    'drf_yasg',
 ]
+
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "rest_framework.authtoken",
+    "drf_yasg",
+]
+
+LOCAL_APPS = [
+    "apps.products.apps.ProductsConfig",
+    "apps.users.apps.UsersConfig",
+]
+
+INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS + CONFIG_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -46,8 +50,8 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
     ]
 }
 
@@ -70,6 +74,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
+
+# User
+AUTH_USER_MODEL = "users.User"
 
 
 # Database
