@@ -130,3 +130,33 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# redis configurations
+REDIS_URL = "redis://127.0.0.1:6379/0"
+
+# redis configurations
+REDIS_URL = "redis://127.0.0.1:6379/0"
+
+# celery settings
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL  # for caching
+CELERY_TIMEZONE = "Asia/Gaza"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+# redis (remote dictionary server) for caching
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "MAX_ENTRIES": 2000,
+        },
+        "KEY_PREFIX": "API",
+    }
+}
+# to make redis does not interfere with django admin panel and current session
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+CELERY_CACHE_BACKEND = "default"
